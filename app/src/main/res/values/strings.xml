@@ -1,4 +1,49 @@
 <resources>
     <string name="app_name">Volunteer</string>
     <string name="app_splash">Volunteer</string>
+    <string name="app_settings">Settings</string>
+    <string name="app_volunteering_history">Volunteering History</string>
+    <string name="app_faqsText">FAQs</string>
+    <string name="app_faq">
+    <![CDATA[
+            <h1>FAQs</h1>
+    <b>Q: What is the purpose of the volunteering app?</b>
+    <br>
+       A: The volunteering app is designed to connect individuals who
+       are interested in volunteering with local organizations and events
+       that need volunteers. The app allows users to browse and sign up for volunteer
+       opportunities, track their volunteer hours, and connect with other like-minded
+       individuals in their community.
+    <br><br>
+
+    <b>Q: How do I sign up for the volunteering app?</b>
+       <br>
+       A: To sign up for the volunteering app, simply download the app from the App Store or
+       Google Play Store, and create an account using your email address or social media account.
+       Once you have created an account, you can start browsing and signing up for volunteer opportunities
+       in your area. <br><br>
+
+    <b>Q: How do I find volunteer opportunities near me?</b><br>
+       A: Once you are logged into the app, you can use the search function to find volunteer
+       opportunities near you. You can filter the results by location, date, type of opportunity,
+       and more. Additionally, the app will recommend volunteer opportunities based on your interests
+       and previous volunteer experience.
+    <br><br>
+
+    <b>Q: Can I track my volunteer hours using the app?</b> <br>
+        A: Yes, the volunteering app allows you to track your volunteer hours for each
+        opportunity you participate in. You can view your total volunteer hours, as well as a
+        breakdown of hours by organization and event, in the "My Volunteer Hours" section of the app.
+        <br><br>
+
+    <b>Q: Can I use the app to sign up for volunteer opportunities as a group?</b> <br>
+        A: Yes, the app allows you to sign up for volunteer opportunities as a group. When signing
+        up for an opportunity, you can indicate the number of volunteers in your group, and the app
+         will reserve spots for all members of your group. Please note that some volunteer opportunities
+         may have a limit on the number of volunteers they can accommodate.
+
+    ]]>
+
+
+    </string>
 </resources>

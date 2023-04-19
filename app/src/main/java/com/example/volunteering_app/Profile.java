@@ -6,12 +6,14 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -84,7 +86,7 @@ public class Profile extends AppCompatActivity {
                 Address address = addresses.get(0);
                 String city = address.getLocality();
                 String country = address.getCountryName();
-//                System.out.println(city);
+
 
                 // Check if the city and country are not null
                 if (city != null && country != null) {
@@ -92,7 +94,7 @@ public class Profile extends AppCompatActivity {
                     textViewCity.setText(city);
                     textViewCountry.setText(country);
                 } else {
-                    // Handle the case where the city or country is null
+                    System.out.println("City is null");
                 }
             } else {
                 // Handle the case where the Geocoder returns no results
@@ -106,17 +108,38 @@ public class Profile extends AppCompatActivity {
 
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
         requestLocationPermissions();
 
+//        This part is for the location
         textViewCity = findViewById(R.id.cityLocation);
         textViewCountry = findViewById(R.id.countryLocation);
 
+//        This part is for the volunteering button image
+        ImageButton myVolunteerButton = findViewById(R.id.volunteerButton);
+        myVolunteerButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Profile.this, Volunteer.class);
+                startActivity(intent);
+            }
+        });
 
 
+// This is for the FAQs Button
+        ImageButton myFaqsButton = findViewById(R.id.faqButton);
+        myFaqsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Profile.this, Faqs.class);
+                startActivity(intent);
+            }
+        });
+
+
+// This last two brackets are from the class
     }
 }
