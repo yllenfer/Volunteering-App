@@ -16,6 +16,9 @@
         android:theme="@style/Theme.VolunteeringApp"
         tools:targetApi="31">
         <activity
+            android:name=".Register"
+            android:exported="false" />
+        <activity
             android:name=".Faqs"
             android:exported="false" />
         <activity

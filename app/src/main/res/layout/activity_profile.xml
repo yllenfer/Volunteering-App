@@ -195,7 +195,7 @@
         android:src="@drawable/handshake" />
 
     <ImageButton
-        android:id="@+id/volunteerExit"
+        android:id="@+id/profileExit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@android:color/transparent"

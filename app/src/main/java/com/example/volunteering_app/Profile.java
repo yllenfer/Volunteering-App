@@ -139,6 +139,14 @@ public class Profile extends AppCompatActivity {
             }
         });
 
+        ImageButton profileBackButton = findViewById(R.id.profileExit);
+        profileBackButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Close the current activity and return to the previous activity
+                finish();
+            }
+        });
 
 // This last two brackets are from the class
     }
