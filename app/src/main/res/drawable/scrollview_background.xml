@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <shape xmlns:android="http://schemas.android.com/apk/res/android">
+        <solid android:color="#FFFFFF"/> <!-- Background color of the ScrollView -->
+        <corners android:radius="10dp"/> <!-- Corner radius -->
+        <!-- Add a border if needed -->
+        <!--<stroke android:color="#000000" android:width="2dp"/>-->
+    </shape>
+
+
+
+</selector>
