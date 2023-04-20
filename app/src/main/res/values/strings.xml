@@ -4,6 +4,9 @@
     <string name="app_settings">Settings</string>
     <string name="app_volunteering_history">Volunteering History</string>
     <string name="app_faqsText">FAQs</string>
+    <string name="app_registerText">Register</string>
+    <string name="app_loginText">Login</string>
+
     <string name="app_faq">
     <![CDATA[
 

@@ -21,7 +21,7 @@ public class Splash extends AppCompatActivity {
             @Override
             public void run() {
                 // Jump to the profile activity after the delay
-                Intent intent = new Intent(Splash.this, Profile.class);
+                Intent intent = new Intent(Splash.this, Register.class);
                 startActivity(intent);
                 finish(); // Finish the splash activity to prevent returning back to it
             }
