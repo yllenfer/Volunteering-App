@@ -6,6 +6,9 @@
     <string name="app_faqsText">FAQs</string>
     <string name="app_registerText">Register</string>
     <string name="app_loginText">Login</string>
+    <string name="app_logoutText">Logout</string>
+    <string name="facebook_app_id">1299720987422975</string>
+
 
     <string name="app_faq">
     <![CDATA[

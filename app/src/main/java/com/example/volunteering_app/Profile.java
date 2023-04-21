@@ -45,13 +45,7 @@ public class Profile extends AppCompatActivity {
     private Uri imageUri;
 
 
-//    @Override
-//    protected void onCreate(Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//        setContentView(R.layout.activity_profile);
 
-
- //End of image upload code
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -60,8 +54,6 @@ public class Profile extends AppCompatActivity {
             imageViewProfile.setImageURI(imageUri);
         }
     }
-
-
 
 
 
@@ -152,72 +144,6 @@ public class Profile extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
         requestLocationPermissions();
-
- //for image upload
-
-
-//
-//        imageViewProfile = findViewById(R.id.imageViewProfile);
-//        Button buttonChooseImage = findViewById(R.id.buttonChooseImage);
-//        Button buttonUploadImage = findViewById(R.id.buttonUploadImage);
-//
-//        buttonChooseImage.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                openFileChooser();
-//            }
-//        });
-//
-//        buttonUploadImage.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                uploadImageToFirebaseStorage();
-//            }
-//        });
-//    }
-//
-//    private void openFileChooser() {
-//        Intent intent = new Intent();
-//        intent.setType("image/*");
-//        intent.setAction(Intent.ACTION_GET_CONTENT);
-//        startActivityForResult(intent, PICK_IMAGE_REQUEST);
-//    }
-//
-//
-//
-//    private void uploadImageToFirebaseStorage() {
-//        if (imageUri != null) {
-//            FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
-//            if (currentUser == null) {
-//                // Handle the case where the user is not signed in
-//                return;
-//            }
-//
-//            String userId = currentUser.getUid();
-//            StorageReference storageReference = FirebaseStorage.getInstance().getReference("profile_images").child(userId + ".jpg");
-//
-//            storageReference.putFile(imageUri)
-//                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-//                        @Override
-//                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-//                            // Image upload successful
-//                            Toast.makeText(ProfileActivity.this, "Image uploaded successfully", Toast.LENGTH_SHORT).show();
-//                        }
-//                    })
-//                    .addOnFailureListener(new OnFailureListener() {
-//                        @Override
-//                        public void onFailure(@NonNull Exception e) {
-//                            // Image upload failed
-//                            Toast.makeText(Profile.this, "Image upload failed: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-//                        }
-//                    });
-//        } else {
-//            Toast.makeText(this, "No image selected", Toast.LENGTH_SHORT).show();
-//        }
-//    }
-
-
-
 
 
 
