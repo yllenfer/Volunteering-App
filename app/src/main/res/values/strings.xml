@@ -7,7 +7,16 @@
     <string name="app_registerText">Register</string>
     <string name="app_loginText">Login</string>
     <string name="app_logoutText">Logout</string>
+
+
+
+
     <string name="facebook_app_id">1299720987422975</string>
+    <string name="fb_login_protocol_scheme">fb1234</string>
+    <string name="facebook_client_token">56789</string>
+
+
+
 
 
     <string name="app_faq">

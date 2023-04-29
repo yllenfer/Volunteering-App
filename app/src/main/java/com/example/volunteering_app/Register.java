@@ -37,7 +37,8 @@ public class Register extends AppCompatActivity {
     TextInputEditText textRegisterEmail, textRegisterPassword;
     ImageButton regButton;
     FirebaseAuth mAuth;
-    private CallbackManager callbackManager;
+    CallbackManager callbackManager;
+    ImageButton fbButton;
 
     public void onStart() {
         super.onStart();
@@ -55,8 +56,7 @@ public class Register extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
-//        FacebookSdk.sdkInitialize(getApplicationContext());
-
+        FacebookSdk.sdkInitialize(getApplicationContext());
 
 
         textRegisterEmail = findViewById(R.id.editTextRegisterEmail);
@@ -65,6 +65,37 @@ public class Register extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
 
         //            This is for the facebook register/ login
+        callbackManager = CallbackManager.Factory.create();
+
+        LoginManager.getInstance().registerCallback(callbackManager,
+                new FacebookCallback<LoginResult>() {
+                    @Override
+                    public void onSuccess(LoginResult loginResult) {
+                        startActivity(new Intent(Register.this, Profile.class));
+                        finish();
+                    }
+
+                    @Override
+                    public void onCancel() {
+                        // App code
+                    }
+
+                    @Override
+                    public void onError(FacebookException exception) {
+                        // App code
+                    }
+                });
+
+
+        fbButton = findViewById(R.id.faceBookButton);
+        fbButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                LoginManager.getInstance().logInWithReadPermissions(Register.this, Arrays.asList("public_profile"));
+            }
+        });
+
+
 
 
 
@@ -113,7 +144,12 @@ public class Register extends AppCompatActivity {
 
 
 
+        }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        callbackManager.onActivityResult(requestCode, resultCode, data);
+        super.onActivityResult(requestCode, resultCode, data);
 
 }
 }
