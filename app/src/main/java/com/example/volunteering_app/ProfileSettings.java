@@ -40,12 +40,35 @@ public class ProfileSettings extends AppCompatActivity {
         buttonLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                FirebaseAuth.getInstance().signOut();
-                Intent intent = new Intent(getApplicationContext(), Login.class);
-                startActivity(intent);
-                finish();
+                logout();
 
             }
         });
+
+
+
+
+
     }
+
+    private void logout() {
+        // Log out from Firebase (and/or Facebook, if applicable)
+        FirebaseAuth.getInstance().signOut();
+
+        // Create an intent to start the login activity
+        Intent intent = new Intent(this, ProfileSettings.class);
+
+        // Set the appropriate intent flags to clear the back stack
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+
+        // Start the login activity
+        startActivity(intent);
+
+        // Finish the current activity (optional, depending on your use case)
+        finish();
+    }
+
+
+
+
 }
