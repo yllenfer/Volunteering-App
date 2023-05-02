@@ -8,6 +8,7 @@ import androidx.core.content.ContextCompat;
 
 import android.Manifest;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
@@ -31,6 +32,8 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
 
+import com.bumptech.glide.Glide;
+
 
 public class Profile extends AppCompatActivity {
 
@@ -38,22 +41,24 @@ public class Profile extends AppCompatActivity {
     private TextView textViewCity; // Variable to reference the city TextView
     private TextView textViewCountry; // Variable to reference the country TextView
 
+    private ImageView profilePh;
 
-//For uploading and changing profile image
-    private static final int PICK_IMAGE_REQUEST = 1;
-    private ImageView imageViewProfile;
-    private Uri imageUri;
+    private void loadProfilePicture() {
+        SharedPreferences sharedPreferences = getSharedPreferences("profile", MODE_PRIVATE);
+        String profilePictureUrl = sharedPreferences.getString("profilePictureUrl", null);
 
-
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
-            imageUri = data.getData();
-            imageViewProfile.setImageURI(imageUri);
+        if (profilePictureUrl != null) {
+            Glide.with(this)
+                    .load(profilePictureUrl)
+                    .centerCrop()
+                    .into(profilePh);
+        } else {
+            // Handle the case where the profile picture URL is null
+            // For example, display a default image or show an error message
         }
     }
+
+
 
 
 
@@ -122,7 +127,7 @@ public class Profile extends AppCompatActivity {
                 // Check if the city and country are not null
                 if (city != null && country != null) {
                     // Display the city and country in the TextViews
-                    textViewCity.setText(city);
+                    textViewCity.setText(city + ", ");
                     textViewCountry.setText(country);
                 } else {
                     System.out.println("City is null");
@@ -144,7 +149,23 @@ public class Profile extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
         requestLocationPermissions();
+        loadProfilePicture();
 
+        profilePh = findViewById(R.id.profilePhoto);
+        Intent intent = getIntent();
+        String profilePictureUrl = intent.getStringExtra("profilePictureUrl");
+
+        // Load the profile picture into the ImageView using Glide
+        if (profilePictureUrl != null) {
+            // Load the profile picture into the ImageView using Glide
+            Glide.with(this)
+                    .load(profilePictureUrl)
+                    .centerCrop()
+                    .into(profilePh);
+        } else {
+            // Handle the case where the profile picture URL is null
+            // For example, display a default image or show an error message
+        }
 
 
 
@@ -194,6 +215,9 @@ public class Profile extends AppCompatActivity {
                 finish();
             }
         });
+
+
+
 
 
 

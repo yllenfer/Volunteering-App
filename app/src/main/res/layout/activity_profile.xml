@@ -33,20 +33,20 @@
         app:layout_constraintVertical_bias="0.273"
         app:srcCompat="@drawable/ellipse" />
 
-    <ImageView
-        android:id="@+id/imageViewProfile"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+
+    <com.example.volunteering_app.CircleImageView
+        android:id="@+id/profilePhoto"
+        android:layout_width="168dp"
+        android:layout_height="164dp"
+        android:scaleType="centerCrop"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.542"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.29"
-        tools:srcCompat="@drawable/logo" />
+        app:layout_constraintVertical_bias="0.301" />
 
-
-
+    <!--    TODO: Necesito bordear la parte de arriba de este rectangulo-->
 
     <TextView
         android:id="@+id/cityLocation"
@@ -57,7 +57,7 @@
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.374"
+        app:layout_constraintHorizontal_bias="0.395"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.517" />
@@ -71,12 +71,10 @@
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.536"
+        app:layout_constraintHorizontal_bias="0.557"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.517" />
-
-<!--    TODO: Necesito bordear la parte de arriba de este rectangulo-->
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"

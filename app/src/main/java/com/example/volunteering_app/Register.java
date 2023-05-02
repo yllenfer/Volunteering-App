@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
@@ -23,6 +24,8 @@ import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -33,6 +36,9 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -46,16 +52,16 @@ public class Register extends AppCompatActivity {
     CallbackManager callbackManager;
     ImageButton fbButton;
 
-    public void onStart() {
-        super.onStart();
-        // Check if user is signed in (non-null) and update UI accordingly.
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-        if (currentUser != null) {
-            Intent intent = new Intent(getApplicationContext(), Profile.class);
-            startActivity(intent);
-            finish();
-        }
-    }
+//    public void onStart() {
+//        super.onStart();
+//        // Check if user is signed in (non-null) and update UI accordingly.
+//        FirebaseUser currentUser = mAuth.getCurrentUser();
+//        if (currentUser != null) {
+//            Intent intent = new Intent(getApplicationContext(), Profile.class);
+//            startActivity(intent);
+//            finish();
+//        }
+//    }
 
 
     @Override
@@ -69,6 +75,17 @@ public class Register extends AppCompatActivity {
         textRegisterPassword = findViewById(R.id.editTextRegisterPassword);
         regButton = findViewById(R.id.registerButton);
         mAuth = FirebaseAuth.getInstance();
+
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if (currentUser != null) {
+            // User is already signed in, go to Profile activity
+            Intent intent = new Intent(Register.this, Profile.class);
+            startActivity(intent);
+            finish();
+        } else {
+            // User is not signed in, go to Register or Login activity
+
+        }
 
         //            This is for the facebook register/ login
         callbackManager = CallbackManager.Factory.create();
@@ -90,6 +107,7 @@ public class Register extends AppCompatActivity {
                     public void onSuccess(LoginResult loginResult) {
                         // Log in to Firebase with the Facebook access token
                         handleFacebookAccessToken(loginResult.getAccessToken());
+                        retrieveProfilePicture();
                     }
 
                     @Override
@@ -121,10 +139,8 @@ public class Register extends AppCompatActivity {
                                 String email = user.getEmail();
                                 // Do something with the email address
                             }
-                            // Navigate to the profile activity
-                            Intent intent = new Intent(getApplicationContext(), Profile.class);
-                            startActivity(intent);
-                            finish();
+                             retrieveProfilePicture();
+
                         } else {
                             // If sign in fails, display a message to the user.
                             Toast.makeText(Register.this, "Authentication failed.",
@@ -132,10 +148,6 @@ public class Register extends AppCompatActivity {
                         }
                     }
                 });
-
-
-
-
 
 
         try {
@@ -155,56 +167,93 @@ public class Register extends AppCompatActivity {
         }
 
 
+        regButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String email, password;
+                email = String.valueOf(textRegisterEmail.getText());
+                password = String.valueOf(textRegisterPassword.getText());
+
+                if (TextUtils.isEmpty(email)) {
+                    Toast.makeText(Register.this, "Enter email", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                if (TextUtils.isEmpty(password)) {
+                    Toast.makeText(Register.this, "Enter password", Toast.LENGTH_SHORT).show();
+                    return;
+
+                }
+
+                mAuth.createUserWithEmailAndPassword(email, password)
+                        .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                            @Override
+                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                if (task.isSuccessful()) {
+                                    Toast.makeText(Register.this, "Account created", Toast.LENGTH_SHORT).show();
+                                    Intent intent = new Intent(getApplicationContext(), Login.class);
+                                    startActivity(intent);
+                                    finish();
 
 
+                                } else {
+                                    // If sign in fails, display a message to the user.
+                                    Toast.makeText(Register.this, "Nothing Happened!.",
+                                            Toast.LENGTH_SHORT).show();
 
-
-
-    regButton.setOnClickListener(new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            String email, password;
-            email = String.valueOf(textRegisterEmail.getText());
-            password = String.valueOf(textRegisterPassword.getText());
-
-            if (TextUtils.isEmpty(email)) {
-                Toast.makeText(Register.this, "Enter email", Toast.LENGTH_SHORT).show();
-                return;
-            }
-
-            if (TextUtils.isEmpty(password)) {
-                Toast.makeText(Register.this, "Enter password", Toast.LENGTH_SHORT).show();
-                return;
-
-            }
-
-            mAuth.createUserWithEmailAndPassword(email, password)
-                    .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-                            if (task.isSuccessful()) {
-                                Toast.makeText(Register.this, "Account created", Toast.LENGTH_SHORT).show();
-                                Intent intent = new Intent(getApplicationContext(), Login.class);
-                                startActivity(intent);
-                                finish();
-
-
-                            } else {
-                                // If sign in fails, display a message to the user.
-                                Toast.makeText(Register.this, "Nothing Happened!.",
-                                        Toast.LENGTH_SHORT).show();
-
+                                }
                             }
+                        });
+
+            }
+        });
+
+
+
+
+
+
+        }
+
+    private void retrieveProfilePicture() {
+        AccessToken accessToken = AccessToken.getCurrentAccessToken();
+        GraphRequest request = GraphRequest.newMeRequest(
+                accessToken,
+                new GraphRequest.GraphJSONObjectCallback() {
+                    @Override
+                    public void onCompleted(JSONObject object, GraphResponse response) {
+                        try {
+                            JSONObject picture = object.getJSONObject("picture");
+                            JSONObject data = picture.getJSONObject("data");
+                            String profilePictureUrl = data.getString("url");
+
+                            // Start the ProfileActivity and pass the profile picture URL
+                            Intent intent = new Intent(Register.this, Profile.class);
+                            intent.putExtra("profilePictureUrl", profilePictureUrl);
+                            startActivity(intent);
+                            finish();
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
                         }
-                    });
+                    }
+                });
 
-        }
-    });
+        Bundle parameters = new Bundle();
+        parameters.putString("fields", "id,name,picture.type(large)");
+        request.setParameters(parameters);
+        request.executeAsync();
+    }
 
 
+    private void saveProfilePictureUrl(String profilePictureUrl) {
+        SharedPreferences sharedPreferences = getSharedPreferences("profile", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("profilePictureUrl", profilePictureUrl);
+        editor.apply();
+    }
 
 
-        }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
